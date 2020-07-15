@@ -1,0 +1,315 @@
+@media (min-width: 600px){
+    .container {
+        max-width: 495px;
+        width: 495px;
+        margin: auto auto 50px;
+        border-radius: 19px;
+        box-shadow: 0 2px 28px 0 rgba(0,0,0,.08);
+    }
+}
+
+
+#ad-create {
+    display: block;
+}
+
+#ad-create div.sub-item {
+    padding-top: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+#ad-create div.sub-item p {
+    font-family: Lato,sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    color: #000;
+}
+
+
+#ad-create div.sub-item span{
+    font-weight: 300;
+    font-size: 8px;
+    color: #000;
+}
+
+.place-holder {
+    font-family: Lato,sans-serif;
+    font-weight: 300;
+    font-size: 15px;
+    color: rgb(63, 62, 62);
+}
+
+.desc {
+    width: 100%;
+}
+
+.mat-slide-toggle-label {
+    width: 50%;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+    color: black;
+  }
+
+.sub-item .mat-card {
+    background: white;
+    color: rgb(8, 2, 2);
+    box-shadow: none;
+    padding: 0px;
+}
+::ng-deep  .mat-radio-outer-circle {
+    border-color: rgba(0,0,0,.54);
+}
+
+.carry-section .carry-help {
+    color: rgb(243, 142, 10);
+    width: 50%;
+}
+
+@media (min-width: 375px) {
+    .cta {
+        width: 80%;
+        height: 60px;
+        border-radius: 30px;
+        font-size: 22px;
+        font-weight: 900;
+    }
+}
+
+.cta {
+    width: 80%;
+    display: block;
+    height: 48px;
+    margin: 16px auto 30px;
+    border-radius: 30px;
+    border: none;
+    background-color: #2a91f5;
+    cursor: pointer;
+    outline: none;
+    -webkit-appearance: none;
+    font-size: 20px;
+    font-weight: 800;
+    text-align: center;
+    color: #fff;
+}
+
+.section-seperator-line {
+    width: 100%;
+    height: 1px;
+    background-color: #eed231;
+}
+
+agm-map {
+    height: 400px;
+  }
+  
+.autocomplete-container {
+    padding: 1rem 0 1rem 0;
+    width: 50%;
+}
+
+.sub-item .container {
+    width: 98%;
+}
+
+::ng-deep .mat-form-field-label {
+    color: rgba(33, 32, 32, 0.7);
+}
+
+::ng-deep input .mat-input-element {
+    color: rgba(33, 32, 32, 0.7);
+    border: rgba(33, 32, 32, 0.7);
+}
+
+::ng-deep .mat-tab-label .mat-tab-label-content {
+    color: black;
+    font-size: 18px;
+}
+
+::ng-deep mat-ink-bar {
+    border-bottom: 0;
+}
+
+::ng-deep mat-tab {
+    width: 50%;
+}
+.mat-button-toggle-appearance-standard {
+    color: black;
+    background-color: white;
+}
+
+.light-button {
+    font-size: 110%;
+    border: 2px solid rgb(236, 177, 50) !important;
+    margin: 1px 1px 1px 1px;
+}
+
+::ng-deep .sub-item .section-list .time-checkbox .mat-checkbox-inner-container {
+    display: none!important; 
+}
+
+.sub-item .section-list .time-checkbox {
+    width: 24.5% !important;
+    display: inline-block;
+    text-align: center;
+    margin: 1px 1px 1px 1px;
+}
+
+.sub-item .section-list {
+    margin-top: 10px;
+}
+
+#time-slot-text {
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.38;
+    text-align: center;
+    color: rgb(0, 0, 0);
+}
+
+.delivery-note {
+    line-height: 1.69;
+    text-align: center;
+}
+
+.phone-full-width {
+    width: 100%;
+}
+
+.item-statement-section {
+    background-color: rgb(245, 241, 179);
+}
+
+.item-statement-section .item-statement {
+    margin-left: 5px;
+}
+
+::ng-deep .sub-item .item-statement-section .item-statement .mat-checkbox-layout {
+    white-space: normal;
+    width: 98%;
+}
+
+::ng-deep .sub-item .item-statement-section .item-statement .mat-checkbox-inner-container {
+    background-color: rgb(221, 147, 10);
+}
+
+::ng-deep .mat-form-field-prefix{
+    border: 1px solid rgb(236, 177, 50) !important;
+    height: 30px !important;
+}
+
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-label {
+    margin-left: 5px;
+    color: black;
+}
+
+.phone-container {
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-pack: start;
+    justify-content: flex-start;
+    -webkit-box-align: center;
+    align-items: center;
+    border: 1px solid #eceef2;
+    border-radius: 4px;
+}
+
+.country-code {
+    margin: 0 0 0 16px;
+    font-size: 18px;
+}
+
+.input-seperator {
+    font-size: 28px;
+    padding: 0;
+    font-weight: 300;
+    color: #cecece;
+    margin: -5px 8px 0 12px;
+}
+
+#resend-phone, .phone {
+    border: none;
+    outline: none;
+    margin: 0;
+    padding: 0;
+}
+
+
+::ng-deep .mat-form-field-underline {
+ /*change color of underline*/
+  background-color:  rgb(255, 255, 255) !important;
+} 
+
+::ng-deep .mat-form-field-ripple {
+ /*change color of underline when focused*/
+ background-color: rgb(255, 255, 255) !important;;
+} 
+
+::placeholder {
+    color: rgb(10, 10, 10);
+    opacity: 1; /* Firefox */
+  }
+  
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color: rgb(10, 10, 10);
+  }
+  
+::-ms-input-placeholder { /* Microsoft Edge */
+   color: rgb(10, 10, 10);
+  }
+
+.price-container {
+      width: 100%;
+  }
+.mat-slider-horizontal {
+      width: 80%;
+  }
+
+::ng-deep .mat-slider-min-value.mat-slider-thumb-label-showing .mat-slider-thumb, .mat-slider-min-value.mat-slider-thumb-label-showing .mat-slider-thumb-label {
+      background-color: #ffd740;
+  }
+
+::ng-deep .mat-slider-thumb {
+      width: 25px !important;
+      height: 25px !important;
+      bottom: -36px !important;
+  }
+
+::ng-deep .mat-slider-thumb-label-text {
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+}
+
+::ng-deep .mat-slider-horizontal .mat-slider-thumb-label {
+    top: -8px !important;
+}
+
+mat-slider ::ng-deep .mat-slider-wrapper ::ng-deep .mat-slider-track-wrapper ::ng-deep .mat-slider-track-background{
+    background-color: white; 
+}
+mat-slider ::ng-deep .mat-slider-wrapper ::ng-deep .mat-slider-track-wrapper ::ng-deep .mat-slider-track-fill{
+    background-color: white; 
+}
+
+mat-slider {
+    background-image: url(/assets/imgs/icon/furnitures.png);
+    background-size: 100% 98px;
+    height: 98px;
+    position: relative;
+}
+
+.payment-label {
+    margin-top: 5%;
+    height: 50px;
+    bottom: 30px;
+    margin-left: 2%;
+    border: 2px solid rgb(236, 177, 50); 
+    text-align: center;
+}
+
+.sub-item p .total-amount {
+    font-weight: 200;
+}

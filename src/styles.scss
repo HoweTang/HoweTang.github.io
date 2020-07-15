@@ -1,0 +1,73 @@
+@import '~@angular/material/theming';
+
+@include mat-core();
+
+$dark-primary: mat-palette($mat-blue);
+$dark-accent:  mat-palette($mat-amber, A200, A100, A400);
+$dark-warn:    mat-palette($mat-deep-orange);
+
+$dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
+
+// enable dark theme for the default angular components
+@include angular-material-theme($dark-theme);
+
+@mixin _mat-slide-toggle-icon-checked($palette, $thumb-checked-hue) {
+  .mat-slide-toggle-thumb mat-icon {
+    color: mat-color($palette, $thumb-checked-hue);
+  }
+}
+  @mixin mat-slide-toggle-icon-theme($theme) {
+  $is-dark: map_get($theme, is-dark);
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $warn: map-get($theme, warn);
+  $background: map-get($theme, background);
+  $foreground: map-get($theme, foreground);
+
+  $thumb-unchecked-hue: if($is-dark, 400, 50);
+  $thumb-checked-hue: default;
+
+  $bar-unchecked-color: mat-color($foreground, base);
+  // $icon-foreground-color: mat-color($foreground, base);
+
+  .mat-slide-toggle-icon {
+    &.mat-checked .mat-slide-toggle-thumb mat-icon {
+      color: white;
+    }
+
+    &:not(.mat-checked) {
+      @include _mat-slide-toggle-icon-checked($accent, $thumb-checked-hue);
+
+      &.mat-primary {
+        @include _mat-slide-toggle-icon-checked($primary, $thumb-checked-hue);
+      }
+
+      &.mat-warn {
+        @include _mat-slide-toggle-icon-checked($warn, $thumb-checked-hue);
+      }
+    }
+
+    .bar-icon {
+      color: $bar-unchecked-color;
+    }
+  }
+}
+body {
+  height: 100vh;
+  margin: 0;
+}
+
+.wrapper-flex {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+router-outlet.router-flex + * {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

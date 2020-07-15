@@ -1,0 +1,55 @@
+<div class="container" fxLayout="column" fxLayoutAlign="center">
+  <mat-card>
+      <mat-card-title *ngIf="title"><img src="{{ imgUrl }}" width="24px" height="24px">{{ title }}</mat-card-title>
+  <mat-card-content>
+      <mat-form-field class="full-width" [appearance]="appearance">
+        <mat-label>{{addressLabelText}}</mat-label>
+        <input matInput [ngStyle]="inputAddressStyles()"
+               [(ngModel)]="address"
+               (change)="onQuery($event)"
+               placeholder="{{placeholderText}}"
+               class="form-control"
+               #search
+               MatValidateAddress
+               required> 
+              <img src="/assets/imgs/icon/location.png"  height="24px" matSuffix *ngIf="! this.address">
+              <button mat-icon-button color="primary" (click)="resetAddress()" *ngIf="this.address">
+                <mat-icon matSuffix>indeterminate_check_box</mat-icon>
+              </button>
+        <mat-error *ngIf="addressSearchControl.hasError('required')">
+          {{requiredErrorText}}
+        </mat-error>
+        <mat-error *ngIf="addressSearchControl.hasError('validateAddress')">
+          {{invalidErrorText}}
+        </mat-error>
+      </mat-form-field>
+      <section class="stair-section">
+        <p>Does the item fit in the elevator or have to take stairs?</p>
+        <mat-radio-group [(ngModel)]="chosenstairs">
+          <mat-radio-button class="stair-help" checked value="elevator" fxFlex="50%">
+            <img width="50%" src="/assets/imgs/icon/Elevator.png"/>
+          </mat-radio-button>
+          <mat-radio-button class="stair-help" value="stairs" fxFlex="50%">
+            <img width="50%" src="/assets/imgs/icon/Stairs.png"/>
+          </mat-radio-button>
+        </mat-radio-group>
+      </section>
+      <div class="floors-help">
+        <mat-form-field appearance="outline" fxFlex="50%">
+          <mat-label>Floors/Unit</mat-label>  
+          <input
+            matInput
+            [formControl]="floors"
+            >
+        </mat-form-field>
+        <mat-form-field appearance="outline" style="padding-left: 1%;" fxFlex="50%">
+          <mat-label>Door pin code</mat-label>  
+          <input
+            matInput
+            [formControl]="doorPinCode"
+            >
+        </mat-form-field>
+      </div>
+      </mat-card-content>
+   </mat-card>
+</div>

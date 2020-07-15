@@ -1,0 +1,52 @@
+<div class="imgs-container">
+    <input class="img-input" #imageUpload type="file" accept="image/*" multiple="">
+    <mat-card class="ad-img-container">  
+        <mat-card-content  class="ad-img-aspect">  
+            <div class="ad-img-overlay visible"  (click)="uploadImage()" *ngIf="imgUrl.length < 4">
+                <img src="/assets/imgs/plus.png" alt="plus icon" width="28" height="28" class="ad-img-plus">
+            </div>
+            <div class="ad-img-overlay visible" *ngIf="imgUrl.length > 3">
+                <img [src]="imgUrl[3]" class="ad-img">
+                
+                <mat-icon  class="delete-img" id="ad-img-4" (click)="deleteImage(3)">remove_circle_outline</mat-icon>
+            </div>
+        </mat-card-content>  
+    </mat-card>
+    <mat-card class="ad-img-container">  
+        <mat-card-content  class="ad-img-aspect">  
+            <div class="ad-img-overlay visible">
+                <img src="/assets/imgs/icon/photo.png" *ngIf="imgUrl[0] === undefined">
+                <div *ngIf="imgUrl[0]">
+                    <img [src]="imgUrl[0]" class="ad-img">
+                    <img [src]="imgUrl[0]" class="ad-img">
+                    <mat-icon  class="delete-img" id="ad-img-1" (click)="deleteImage(0)">remove_circle_outline</mat-icon>
+                    
+                </div>
+            </div>
+            
+        </mat-card-content>  
+    </mat-card>
+    <mat-card class="ad-img-container">  
+        <mat-card-content  class="ad-img-aspect">  
+            <div class="ad-img-overlay visible">
+                <img src="/assets/imgs/icon/photo.png" *ngIf="imgUrl[1] === undefined">
+                <div *ngIf="imgUrl[1]">
+                    <img [src]="imgUrl[1]" class="ad-img">
+                    <mat-icon  class="delete-img" id="ad-img-2" (click)="deleteImage(1)">remove_circle_outline</mat-icon>
+                </div>
+            </div>
+        </mat-card-content>  
+    </mat-card>
+    <mat-card class="ad-img-container">  
+        <mat-card-content  class="ad-img-aspect">  
+            <div class="ad-img-overlay visible">
+                <img src="/assets/imgs/icon/photo.png" *ngIf="imgUrl.length !== 3">
+                <div *ngIf="imgUrl.length > 2">
+                    <img [src]="imgUrl[2]" class="ad-img">
+                    <mat-icon  class="delete-img" id="ad-img-3" (click)="deleteImage(2)">remove_circle_outline</mat-icon>
+                </div>
+            </div>
+        </mat-card-content>  
+    </mat-card>
+    <mat-error *ngIf="getMessage()">{{ getMessage() }}</mat-error>  
+</div>

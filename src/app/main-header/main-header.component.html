@@ -1,0 +1,26 @@
+<mat-toolbar style="background-color: rgb(245, 170, 83);">
+    <mat-toolbar-row  fxHide fxShow.gt-xs>
+        <div fxFlex fxLayout fxLayoutAlign="flex-head">
+            <div class="center-child-vh">
+              <img class="mooov-logo" src="{{ mooovLogo }}" alt="Mooov logo">
+            </div>
+            <p class="tagline">Speedy same day removals!</p>
+          </div>
+          <div fxFlex fxLayout fxLayoutAlign="flex-end">
+            <img class="store-badge" src="/assets/imgs/logo/appstore-badge.svg">
+            <img class="store-badge" src="/assets/imgs/logo/googleplaystore-badge.png">
+          </div>
+    </mat-toolbar-row>
+    <mat-toolbar-row  fxShow fxHide.gt-xs>
+        <div fxFlex fxLayout fxLayoutAlign="center">
+            <div class="center-child-vh">
+              <img class="mooov-logo" src="{{ mooovLogo }}" alt="Mooov logo">
+            </div>
+          </div>
+    </mat-toolbar-row>
+    <mat-toolbar-row  fxShow fxHide.gt-xs>
+        <div fxFlex fxLayout fxLayoutAlign="center">
+            <p class="tagline">Speedy same day removals!</p>
+        </div>
+    </mat-toolbar-row>
+</mat-toolbar>

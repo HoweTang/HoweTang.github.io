@@ -1,0 +1,92 @@
+
+ .imgs-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -5px;
+    margin-right: -5px;
+}
+
+.imgs-container .img-input {
+    display: none;
+}
+
+.imgs-container .ad-img-container {
+    flex-basis: 25%;
+    width: 25%;
+    float: left;
+    padding: 5px;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    box-shadow: none;
+}
+
+.ad-img-aspect {
+    width: 100%;
+    height: 0;
+    position: relative;
+    padding-top: 100%;
+}
+
+.ad-img, .ad-img-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+
+.ad-img-overlay.visible {
+    visibility: visible;
+}
+
+.ad-img-overlay {
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    flex-direction: column;
+    -webkit-box-align: center;
+    align-items: center;
+    text-align: center;
+    z-index: 3;
+    border-radius: 10px;
+    border: 1px solid #ebebeb;
+    font-size: 30px;
+    font-weight: 900;
+    color: rgb(238, 208, 39);
+    visibility: hidden;
+}
+
+.imgs-container .mat-card {
+    background: white;
+    color: white;
+}
+
+.ad-img-spinner {
+    display: none;
+}
+img {
+    border-style: none;
+}
+
+.ad-img-clear {
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    z-index: 2;
+    visibility: hidden;
+}
+
+.ad-img-overlay .ad-img {
+    width: 100%;
+    height: 100%;
+}
+.delete-img {
+    color: crimson;
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    z-index: 2;
+}

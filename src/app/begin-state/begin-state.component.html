@@ -1,0 +1,169 @@
+<div class="container">
+    <div id="ad-create">
+        <div class="sub-item">
+            <p>What would you like to move or deliver?</p>
+            <mat-form-field  appearance="outline" class="desc">
+                <mat-label  class="place-holder">Enter item description</mat-label>
+                <textarea
+                    matInput
+                    [formControl]="descriptionFC"
+                    [maxLength]=300
+                    rows="4"
+                ></textarea>
+                <mat-error *ngIf="descriptionFC.hasError('required')">Oops! You have to describe your item.</mat-error>
+                <mat-error *ngIf="descriptionFC.hasError('maxlength')">Oops! Max description length is 300.</mat-error>        
+            </mat-form-field>
+            <p>Pictures of the item</p> 
+            <div class="images-wrapper">
+                <image-handler
+                 #imageHandler
+                ></image-handler>
+            </div>
+        </div>
+        <div class="sub-item">
+            <p>Do you need 1 or 2 people to help?</p>
+            <mat-card>
+                <mat-card-content>
+                  <section class="carry-section">
+                    <mat-radio-group [(ngModel)]="chosenCarryItem">
+                      <mat-radio-button class="carry-help" checked value="one">
+                        <img src="/assets/imgs/icon/run-1.png" width="87px">
+                      </mat-radio-button>
+                      <mat-radio-button class="carry-help" value="two">
+                        <img src="/assets/imgs/icon/run-2.png">
+                      </mat-radio-button>
+                    </mat-radio-group>
+                  </section>
+                  
+                </mat-card-content>
+              </mat-card>
+        </div>
+        <div class="section-seperator-line mt-30"></div>
+        <div class="sub-item">  
+            <p>Collection & Delivery information</p>
+            <address-handler
+                title="Pick up address"
+                type="address"
+                appearance="outline"
+                country=""
+                addressLabelText="pick up address"
+                (collectionAndDeleiveryInfo)="pickupAddress($event)"
+                #PickUpAddressHandler
+            ></address-handler>
+            <div class="section-seperator-line mt-30" style="margin-top: 15px; margin-bottom: 15px;"></div>
+            <address-handler
+                imgUrl="/assets/imgs/icon/drop off@3x.png"
+                title="Delivery address"
+                type="address"
+                appearance="outline"
+                country=""
+                addressLabelText="delivery address"
+                #DeliveryAddressHandler
+                (collectionAndDeleiveryInfo)="deliveryAddress($event)"
+            ></address-handler>
+        </div>
+        <div class="section-seperator-line mt-30"></div>
+        <div class="sub-item">  
+            <p>Collection time</p>
+            <span>When is the seller avaliable for pickup?</span>
+              <mat-button-toggle-group #group="matButtonToggleGroup" (change)="onEndpointValChange(group.value)" multiple="false" >
+                <mat-button-toggle value="today" fxFlex="50%" class="light-button" 
+                 [ngStyle]="{'background-color': selectedTimeListForToday ? 'rgb(233, 189, 131)' : 'rgb(255, 255, 255)'}">< Today</mat-button-toggle>
+                <mat-button-toggle value="tomorrow" fxFlex="50%" class="light-button" 
+                [ngStyle]="{'background-color': !selectedTimeListForToday ? 'rgb(233, 189, 131)' : 'rgb(255, 255, 255)'}">Tomorrow ></mat-button-toggle>
+              </mat-button-toggle-group>
+              <section class="section-list">
+                  <div class="time-checkbox" *ngFor="let sectionTime of getTimeList()" [ngStyle]='{"background-color" : 
+                  sectionTime.completed ? "rgb(236, 177, 50)" : "rgb(221, 218, 218)"}'>
+                    <mat-checkbox
+                    [(ngModel)]="sectionTime.completed"
+                    [disabled]="isDisabled(sectionTime.completed)"
+                    (change)="updateSelectedTimeList(sectionTime.completed, sectionTime.value)"
+                    >{{ sectionTime.value }}</mat-checkbox>
+                  </div>
+              </section>
+            <p id="time-slot-text">({{ selectedTimeSlotNumber }} time slot selected)</p>
+            <p class="delivery-note mb-30 inner" style="font-weight: 300;">
+                *Delivery usually takes place within 2h after pick-up
+              </p>
+        </div>
+        <div class="section-seperator-line mt-30"></div>
+        <div class="sub-item">  
+            <p>How much would you like to pay?</p>
+            <span>Mooov uses algorithm between supply and demand to recommend prices according to the item size and travel distance. Prices like below will ge you quicker response.</span>
+            <div class="price-container">
+                <mat-slider
+                thumbLabel
+                [displayWith]="updateDisplayPoiont"
+                tickInterval="1000"
+                min="1"
+                max="990000"
+                value="{{ payment }}"
+                (change)="updateCharge($event)"
+                ></mat-slider>
+                <input matInput 
+                class="payment-label"
+                [formControl]="paymentFC"
+                (change)="updateSliderCharge($event)"
+                fxFlex="15%" required>
+            </div>
+            <mat-error *ngIf="paymentFC.hasError('pattern')">Oops! invalid charge.</mat-error>   
+        </div>
+        <div class="section-seperator-line mt-30" style="margin-top: 10px;"></div>
+        <div class="sub-item">  
+            <p>Your phone number</p>
+            <div id="buyer-phone" class="phone-container mb-8 inner" style="border-color: rgb(90, 85, 85);">
+                <p class="country-code" matPrefix>+46</p>
+                <div class="input-seperator" matPrefix>|</div>
+                <mat-form-field class="phone-full-width" appearance="fill" style="color: black;">
+                    <input type="tel"
+                    matInput
+                    placeholder="Phone number"
+                    [formControl]="phoneFC"
+                    >
+                    <mat-icon matSuffix>smartphone</mat-icon>
+                  </mat-form-field>
+              </div>            
+              <mat-error *ngIf="phoneFC.hasError('required')">Oops! You have to input your phone number.</mat-error>
+              <mat-error *ngIf="phoneFC.hasError('pattern')">Oops, invalid phone number.</mat-error> 
+              <p style="font-weight: 300; font-size: 10px;">SMS with delivery details will be sent to you</p>
+        </div>
+        <div class="sub-item">  
+           <p>Total amount</p>
+            <mat-grid-list cols="4" rowHeight="100px">
+
+                <mat-grid-tile
+                    [colspan]="2"
+                    [rowspan]="1">
+                    Offer {{ getCharge() }} kr
+                </mat-grid-tile>
+                <mat-grid-tile
+                    [colspan]="2"
+                    [rowspan]="2"
+                    style="background : rgb(248, 205, 86)">
+                    Total {{ getCharge() + 19 }} kr
+                </mat-grid-tile>
+                <mat-grid-tile
+                    [colspan]="2"
+                    [rowspan]="1">
+                    Admin fee 19 kr
+                </mat-grid-tile>
+              </mat-grid-list>
+        </div>
+        <div class="sub-item">  
+            <section class="item-statement-section">
+                <mat-checkbox class="item-statement" [(ngModel)]="disabled">
+                    I hereby acknowledge that what is being collected matches the image and descreption, 
+                        does not contain toxec or harmful substance, 
+                        and will be available at the time for collection or deliver.
+                    </mat-checkbox>
+            </section>
+        </div>
+        <div class="sub-item">
+            <div class="example-button-row">
+                <button mat-flat-button class="cta mb-30 inner" style="background-color: rgb(248, 193, 42);" (click)="onContiune()" [disabled]="!disabled">CONTINUE</button>
+            </div>
+        </div>
+    </div>    
+</div>
+

@@ -1,0 +1,93 @@
+a {
+    text-decoration: none;
+    color: white;
+}
+ 
+a:hover, a:active{
+    color: lightgray;
+}
+ 
+.navigation-items{
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+ 
+mat-toolbar{
+    border-radius: 3px;
+    margin-bottom: 30px;
+}
+ 
+@media(max-width: 959px){
+    mat-toolbar{
+        border-radius: 0px;
+        margin-bottom: 30px;
+    }
+}
+
+@media (max-width: 599px){
+    .mat-toolbar-row, .mat-toolbar-single-row {
+        height: 36px;
+    }
+}
+
+
+@media (min-width: 600px){
+    img.mooov-logo {
+        width: 110px;
+        position: relative;
+    }
+}
+
+@media (min-width: 600px){
+     p.tagline {
+        border-left: 1px solid rgb(7, 1, 1);
+        margin: 11px 0 11px 30px;
+        padding: 11px 0 11px 29px;
+    }
+}
+
+.center-child-vh {
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+}
+
+p.tagline {
+    margin-top: 14px;
+    text-align: center;
+    color:  rgb(7, 1, 1);
+}
+p.tagline {
+    font-size: 18px;
+}
+div.section-desc a, p {
+    font-weight: 400;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+}
+p {
+    font-family: Lato,sans-serif;
+    color: #000;
+}
+
+img.mooov-logo {
+    height:  34px;
+    position: relative;
+}
+
+img.store-badge {
+    height: 38px;
+}
+img {
+    border-style: none;
+}
+
+.mooov-spacer {
+    flex: 1 1 auto;
+}

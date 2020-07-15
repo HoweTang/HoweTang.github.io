@@ -1,0 +1,22 @@
+.mat-card {
+    color: rgb(8, 2, 2);
+    box-shadow: none;
+    background-color: rgba(250, 250, 250, 0.596) !important;
+    padding: 0;
+}
+
+.container .mat-card mat-icon {
+    color: rgb(58, 54, 250);
+}
+
+.container .mat-card .mat-card-title {
+    box-shadow: none;
+    font-weight: 600;
+    font-size: 16px;
+    color: #000;
+}
+
+.full-width {
+    width: 100%;
+}
+
