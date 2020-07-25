@@ -616,6 +616,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _address_handler_address_handler_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./address-handler/address-handler.component */ "./src/app/begin-state/address-handler/address-handler.component.ts");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/__ivy_ngcc__/fesm5/router.js");
 /* harmony import */ var _service_header_logo_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../service/header-logo.service */ "./src/app/service/header-logo.service.ts");
+/* harmony import */ var _service_ad_image_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../service/ad-image.service */ "./src/app/service/ad-image.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -634,10 +635,12 @@ var __importDefault = (undefined && undefined.__importDefault) || function (mod)
 
 
 
+
 var BeginStateComponent = /** @class */ (function () {
-    function BeginStateComponent(route, headerLogo) {
+    function BeginStateComponent(route, headerLogo, adImage) {
         this.route = route;
         this.headerLogo = headerLogo;
+        this.adImage = adImage;
         this.chosenCarryItem = 'one';
         this.checked = false;
         this.disabled = false;
@@ -670,17 +673,11 @@ var BeginStateComponent = /** @class */ (function () {
     }
     BeginStateComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.years = [
-            { id: 1, viewValue: "2017" },
-            { id: 2, viewValue: "2018" },
-            { id: 3, viewValue: "2019" },
-            { id: 4, viewValue: "2020" },
-            { id: 5, viewValue: "2021" }
-        ];
         this.headerLogo.changeHeaderLogo('/assets/imgs/logo/whim_mooov.png');
         this.route.queryParams.subscribe(function (params) {
             if (params['ref'] && params['ref'] === 'blocketweb') {
                 _this.headerLogo.changeHeaderLogo('/assets/imgs/logo/tori-mooov-trans.png');
+                _this.adImage.changeImgs(['https://i.blocketcdn.se/static/0/images/48/4859574879.jpg']);
                 _this.isBlocketWeb = true;
                 _this.id = _this.route.snapshot.paramMap.get('id');
                 _this.editDesAndImgs = false;
@@ -833,7 +830,8 @@ var BeginStateComponent = /** @class */ (function () {
     };
     BeginStateComponent.ctorParameters = function () { return [
         { type: _angular_router__WEBPACK_IMPORTED_MODULE_4__["ActivatedRoute"] },
-        { type: _service_header_logo_service__WEBPACK_IMPORTED_MODULE_5__["HeaderLogoService"] }
+        { type: _service_header_logo_service__WEBPACK_IMPORTED_MODULE_5__["HeaderLogoService"] },
+        { type: _service_ad_image_service__WEBPACK_IMPORTED_MODULE_6__["AdImageService"] }
     ]; };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])(_image_handler_image_handler_component__WEBPACK_IMPORTED_MODULE_2__["ImageHandlerComponent"]),
@@ -854,7 +852,8 @@ var BeginStateComponent = /** @class */ (function () {
             styles: [__importDefault(__webpack_require__(/*! ./begin-state.component.css */ "./src/app/begin-state/begin-state.component.css")).default]
         }),
         __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_4__["ActivatedRoute"],
-            _service_header_logo_service__WEBPACK_IMPORTED_MODULE_5__["HeaderLogoService"]])
+            _service_header_logo_service__WEBPACK_IMPORTED_MODULE_5__["HeaderLogoService"],
+            _service_ad_image_service__WEBPACK_IMPORTED_MODULE_6__["AdImageService"]])
     ], BeginStateComponent);
     return BeginStateComponent;
 }());
@@ -888,6 +887,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ImageHandlerComponent", function() { return ImageHandlerComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm5/core.js");
 /* harmony import */ var src_app_service_upload_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/app/service/upload.service */ "./src/app/service/upload.service.ts");
+/* harmony import */ var src_app_service_ad_image_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/service/ad-image.service */ "./src/app/service/ad-image.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -902,15 +902,18 @@ var __importDefault = (undefined && undefined.__importDefault) || function (mod)
 };
 
 
+
 var ImageHandlerComponent = /** @class */ (function () {
-    function ImageHandlerComponent(uploadService) {
+    function ImageHandlerComponent(uploadService, adImage) {
         this.uploadService = uploadService;
+        this.adImage = adImage;
         this.imgUrl = new Array();
         this.inputImgsNum = 0;
         this.isCompleted = false;
     }
     ImageHandlerComponent.prototype.ngOnInit = function () {
-        this.imgUrl[0] = 'https://i.blocketcdn.se/static/0/images/48/4859574879.jpg';
+        var _this = this;
+        this.adImage.imgs.subscribe(function (imags) { return _this.imgUrl = imags; });
     };
     ImageHandlerComponent.prototype.uploadImage = function () {
         var _this = this;
@@ -951,7 +954,8 @@ var ImageHandlerComponent = /** @class */ (function () {
         this.inputImgsNum = this.inputImgsNum - 1;
     };
     ImageHandlerComponent.ctorParameters = function () { return [
-        { type: src_app_service_upload_service__WEBPACK_IMPORTED_MODULE_1__["UploadService"] }
+        { type: src_app_service_upload_service__WEBPACK_IMPORTED_MODULE_1__["UploadService"] },
+        { type: src_app_service_ad_image_service__WEBPACK_IMPORTED_MODULE_2__["AdImageService"] }
     ]; };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])('imageUpload', { static: true }),
@@ -964,7 +968,8 @@ var ImageHandlerComponent = /** @class */ (function () {
             template: __importDefault(__webpack_require__(/*! raw-loader!./image-handler.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/begin-state/image-handler/image-handler.component.html")).default,
             styles: [__importDefault(__webpack_require__(/*! ./image-handler.component.css */ "./src/app/begin-state/image-handler/image-handler.component.css")).default]
         }),
-        __metadata("design:paramtypes", [src_app_service_upload_service__WEBPACK_IMPORTED_MODULE_1__["UploadService"]])
+        __metadata("design:paramtypes", [src_app_service_upload_service__WEBPACK_IMPORTED_MODULE_1__["UploadService"],
+            src_app_service_ad_image_service__WEBPACK_IMPORTED_MODULE_2__["AdImageService"]])
     ], ImageHandlerComponent);
     return ImageHandlerComponent;
 }());
@@ -1037,6 +1042,45 @@ var MainHeaderComponent = /** @class */ (function () {
         __metadata("design:paramtypes", [_service_header_logo_service__WEBPACK_IMPORTED_MODULE_1__["HeaderLogoService"]])
     ], MainHeaderComponent);
     return MainHeaderComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/service/ad-image.service.ts":
+/*!*********************************************!*\
+  !*** ./src/app/service/ad-image.service.ts ***!
+  \*********************************************/
+/*! exports provided: AdImageService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AdImageService", function() { return AdImageService; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm5/core.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+var AdImageService = /** @class */ (function () {
+    function AdImageService() {
+        this.imgs = new rxjs__WEBPACK_IMPORTED_MODULE_1__["BehaviorSubject"]([]);
+    }
+    AdImageService.prototype.changeImgs = function (imgs) {
+        this.imgs.next(imgs);
+    };
+    AdImageService = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
+            providedIn: 'root'
+        })
+    ], AdImageService);
+    return AdImageService;
 }());
 
 
