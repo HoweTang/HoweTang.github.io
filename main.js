@@ -216,32 +216,11 @@ var AppComponent = /** @class */ (function () {
         this.items1 = this.firestore.collection('items').valueChanges();
     }
     AppComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        this.recaptchaVerifier = new firebase__WEBPACK_IMPORTED_MODULE_2__["auth"].RecaptchaVerifier('sign-in-button', {
-            'size': 'invisible'
-        });
-        firebase__WEBPACK_IMPORTED_MODULE_2__["auth"]().signInWithPhoneNumber('+46 8 888 888 88', this.recaptchaVerifier)
-            .then(function (confirmationResult) {
-            // SMS sent. Prompt user to type the code from the message, then sign the
-            // user in with confirmationResult.confirm(code).
-            _this.confirmationResult = confirmationResult;
-            var credential = firebase__WEBPACK_IMPORTED_MODULE_2__["auth"].PhoneAuthProvider.credential(_this.confirmationResult.verificationId, '123456');
-            firebase__WEBPACK_IMPORTED_MODULE_2__["auth"]().signInWithCredential(credential).then(function (credential1) {
-                credential1.user.getIdToken().then(function (token) {
-                    console.log('token id :', token);
-                    var headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpHeaders"]()
-                        .set('content-type', 'application/json')
-                        .set('Authorization', 'Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjU1NGE3NTQ3Nzg1ODdjOTRjMTY3M2U4ZWEyNDQ2MTZjMGMwNDNjYmMiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vcXVhbnR1bS1oYXNoLTI3MjIyMSIsImF1ZCI6InF1YW50dW0taGFzaC0yNzIyMjEiLCJhdXRoX3RpbWUiOjE1OTYyOTQ0MTYsInVzZXJfaWQiOiJtbG0yMjZxVDNqWkppR2RuTndOU2pHRzRoaGcxIiwic3ViIjoibWxtMjI2cVQzalpKaUdkbk53TlNqR0c0aGhnMSIsImlhdCI6MTU5NjI5NDQxNiwiZXhwIjoxNTk2Mjk4MDE2LCJlbWFpbCI6IjQ2ODg4ODg4ODg4QG1vb292LmlvIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJwaG9uZV9udW1iZXIiOiIrNDY4ODg4ODg4ODgiLCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7InBob25lIjpbIis0Njg4ODg4ODg4OCJdLCJlbWFpbCI6WyI0Njg4ODg4ODg4OEBtb29vdi5pbyJdfSwic2lnbl9pbl9wcm92aWRlciI6InBob25lIn19.vhBfhEZHCy4HmCItMSbwlyBCC3M3LGYxMzq1HezJLlBDvwcJosfeswfc2Z4b7AZgXS9iriksvBdhr1f9R956luq2SfrovDk5Q3q0rKgblvhoW6TGN8bNiQ_bki158oUUTj9TVI_7Nx7l286aEcoHmMXRzUAHA5MqgokTiV5OLxSxJJ0IMkrRh1cypIvjvl6UnkntyyYlt0STs21o2RiELuHlrx509FPZhpP7-upLUO6Lz-WW6yEVxu6eaOOcsr66mNeCP4Ra4ilFB0B5YknWyRHCX_sJZ4WkFcyq8yucQqfSSUyOt2G5SbeyzlMAvdy1cfmKc0aSEzWK4XMTDorfvw');
-                    _this.http.get('http://api.mooov.io/v1/orders/lookup-all', { 'headers': headers }).subscribe(function (data) {
-                        console.log(data.total);
-                    });
-                });
-            }).catch(function (err) {
-                console.log(err);
-            });
-            _this.otpSent = true;
-        }).catch(function (err) {
-            console.log(err);
+        var headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpHeaders"]()
+            .set('content-type', 'application/json')
+            .set('Authorization', 'Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjU1NGE3NTQ3Nzg1ODdjOTRjMTY3M2U4ZWEyNDQ2MTZjMGMwNDNjYmMiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vcXVhbnR1bS1oYXNoLTI3MjIyMSIsImF1ZCI6InF1YW50dW0taGFzaC0yNzIyMjEiLCJhdXRoX3RpbWUiOjE1OTYyOTQ0MTYsInVzZXJfaWQiOiJtbG0yMjZxVDNqWkppR2RuTndOU2pHRzRoaGcxIiwic3ViIjoibWxtMjI2cVQzalpKaUdkbk53TlNqR0c0aGhnMSIsImlhdCI6MTU5NjI5NDQxNiwiZXhwIjoxNTk2Mjk4MDE2LCJlbWFpbCI6IjQ2ODg4ODg4ODg4QG1vb292LmlvIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJwaG9uZV9udW1iZXIiOiIrNDY4ODg4ODg4ODgiLCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7InBob25lIjpbIis0Njg4ODg4ODg4OCJdLCJlbWFpbCI6WyI0Njg4ODg4ODg4OEBtb29vdi5pbyJdfSwic2lnbl9pbl9wcm92aWRlciI6InBob25lIn19.vhBfhEZHCy4HmCItMSbwlyBCC3M3LGYxMzq1HezJLlBDvwcJosfeswfc2Z4b7AZgXS9iriksvBdhr1f9R956luq2SfrovDk5Q3q0rKgblvhoW6TGN8bNiQ_bki158oUUTj9TVI_7Nx7l286aEcoHmMXRzUAHA5MqgokTiV5OLxSxJJ0IMkrRh1cypIvjvl6UnkntyyYlt0STs21o2RiELuHlrx509FPZhpP7-upLUO6Lz-WW6yEVxu6eaOOcsr66mNeCP4Ra4ilFB0B5YknWyRHCX_sJZ4WkFcyq8yucQqfSSUyOt2G5SbeyzlMAvdy1cfmKc0aSEzWK4XMTDorfvw');
+        this.http.get('https://api.npms.io/v2/search?q=scope:angular', { 'headers': headers }).subscribe(function (data) {
+            console.log(data.total);
         });
     };
     AppComponent.prototype.onSubmit = function () {
@@ -1566,16 +1545,7 @@ __webpack_require__.r(__webpack_exports__);
 var environment = {
     production: false,
     GOOGLE_MAPS_API_KEY: 'AIzaSyDYKmJ94HSxRolBxEcmPs6zC5m09jzkvgM',
-    firebase: {
-        apiKey: 'AIzaSyBsD65NKJLLr7l0JSxSvdOx0GFW9msbrx0',
-        authDomain: 'quantum-hash-272221.firebaseapp.com',
-        databaseURL: 'https://quantum-hash-272221.firebaseio.com',
-        projectId: 'quantum-hash-272221',
-        storageBucket: 'quantum-hash-272221.appspot.com',
-        messagingSenderId: '202400412804',
-        appId: '1:202400412804:web:97f6c2762538a30075fed1',
-        measurementId: 'G-BTHH007F3R'
-    }
+    firebase: {}
 };
 /*
  * For easier debugging in development mode, you can import the following file
