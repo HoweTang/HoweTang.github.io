@@ -9,7 +9,7 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"wrapper-flex\">\n  <main-header></main-header>\n  <router-outlet></router-outlet>\n</div>\n\n\n\n<div class=\"container\">\n  <ng-container *ngIf=\"!otpSent; else otpContainer\">\n  <div class=\"sec-container\">\n  <input [(ngModel)]=\"phoneNumber\" class=\"get-input\" placeholder=\"Phone\" type=\"tel\">\n  <button (click)=\"sendOtp()\" class=\"button-press\">Get OTP</button>\n  </div>\n  </ng-container>\n  <ng-template #otpContainer>\n  <div class=\"sec-container\">\n  <input [(ngModel)]=\"otp\" class=\"get-input\">\n  <button (click)=\"signIn() \" class=\"button-press\">Sign In</button>\n  </div>\n  </ng-template>\n  <div id=\"sign-in-button\"></div>\n  </div>\n\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"wrapper-flex\">\n  <main-header></main-header>\n  <router-outlet></router-outlet>\n</div>\n\n\n\n<div class=\"container\">\n  <input [(ngModel)]=\"token\" class=\"get-input\">\n  <input [(ngModel)]=\"url\" class=\"get-input\">\n  <button (click)=\"request()\" class=\"button-press\">send</button>\n  <ng-container *ngIf=\"!otpSent; else otpContainer\">\n  <div class=\"sec-container\">\n  <input [(ngModel)]=\"phoneNumber\" class=\"get-input\" placeholder=\"Phone\" type=\"tel\">\n  <button (click)=\"sendOtp()\" class=\"button-press\">Get OTP</button>\n  </div>\n  </ng-container>\n  <ng-template #otpContainer>\n  <div class=\"sec-container\">\n  <input [(ngModel)]=\"otp\" class=\"get-input\">\n  <button (click)=\"signIn() \" class=\"button-press\">Sign In</button>\n  </div>\n  </ng-template>\n  <div id=\"sign-in-button\"></div>\n  </div>\n\n");
 
 /***/ }),
 
@@ -181,9 +181,11 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppComponent", function() { return AppComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm5/core.js");
-/* harmony import */ var firebase__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! firebase */ "./node_modules/firebase/dist/index.cjs.js");
-/* harmony import */ var firebase__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(firebase__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/__ivy_ngcc__/fesm5/http.js");
+/* harmony import */ var _angular_fire_database__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/fire/database */ "./node_modules/@angular/fire/__ivy_ngcc__/fesm5/angular-fire-database.js");
+/* harmony import */ var firebase__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! firebase */ "./node_modules/firebase/dist/index.cjs.js");
+/* harmony import */ var firebase__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(firebase__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/fire/firestore */ "./node_modules/@angular/fire/__ivy_ngcc__/fesm5/angular-fire-firestore.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/__ivy_ngcc__/fesm5/http.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -199,39 +201,57 @@ var __importDefault = (undefined && undefined.__importDefault) || function (mod)
 
 
 
+
+
 var AppComponent = /** @class */ (function () {
-    /**
-    constructor( private db: AngularFireDatabase,
-      private firestore: AngularFirestore,
-      private http: HttpClient) {
-        this.items1 = this.firestore.collection('items').valueChanges();
-  
-    }
-     */
-    function AppComponent(http) {
-        //this.items1 = this.firestore.collection('items').valueChanges();
+    function AppComponent(db, firestore, http) {
+        this.db = db;
+        this.firestore = firestore;
         this.http = http;
         this.title = 'mooov-ng-app';
         this.itemValue = '';
         this.otpSent = false;
         this.phoneNumber = null;
         this.otp = null;
+        this.items1 = this.firestore.collection('items').valueChanges();
     }
     AppComponent.prototype.ngOnInit = function () {
-        var headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]()
-            .set('content-type', 'application/json')
-            .set('Authorization', 'Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjU1NGE3NTQ3Nzg1ODdjOTRjMTY3M2U4ZWEyNDQ2MTZjMGMwNDNjYmMiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vcXVhbnR1bS1oYXNoLTI3MjIyMSIsImF1ZCI6InF1YW50dW0taGFzaC0yNzIyMjEiLCJhdXRoX3RpbWUiOjE1OTYyOTQ0MTYsInVzZXJfaWQiOiJtbG0yMjZxVDNqWkppR2RuTndOU2pHRzRoaGcxIiwic3ViIjoibWxtMjI2cVQzalpKaUdkbk53TlNqR0c0aGhnMSIsImlhdCI6MTU5NjI5NDQxNiwiZXhwIjoxNTk2Mjk4MDE2LCJlbWFpbCI6IjQ2ODg4ODg4ODg4QG1vb292LmlvIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJwaG9uZV9udW1iZXIiOiIrNDY4ODg4ODg4ODgiLCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7InBob25lIjpbIis0Njg4ODg4ODg4OCJdLCJlbWFpbCI6WyI0Njg4ODg4ODg4OEBtb29vdi5pbyJdfSwic2lnbl9pbl9wcm92aWRlciI6InBob25lIn19.vhBfhEZHCy4HmCItMSbwlyBCC3M3LGYxMzq1HezJLlBDvwcJosfeswfc2Z4b7AZgXS9iriksvBdhr1f9R956luq2SfrovDk5Q3q0rKgblvhoW6TGN8bNiQ_bki158oUUTj9TVI_7Nx7l286aEcoHmMXRzUAHA5MqgokTiV5OLxSxJJ0IMkrRh1cypIvjvl6UnkntyyYlt0STs21o2RiELuHlrx509FPZhpP7-upLUO6Lz-WW6yEVxu6eaOOcsr66mNeCP4Ra4ilFB0B5YknWyRHCX_sJZ4WkFcyq8yucQqfSSUyOt2G5SbeyzlMAvdy1cfmKc0aSEzWK4XMTDorfvw');
-        this.http.get('https://api.npms.io/v2/search?q=scope:angular', { 'headers': headers }).subscribe(function (data) {
-            console.log(data.total);
+        this.recaptchaVerifier = new firebase__WEBPACK_IMPORTED_MODULE_2__["auth"].RecaptchaVerifier('sign-in-button', {
+            'size': 'invisible'
         });
+        /**
+           firebase.auth().signInWithPhoneNumber('+46 8 888 888 88', this.recaptchaVerifier)
+           .then((confirmationResult) => {
+           // SMS sent. Prompt user to type the code from the message, then sign the
+           // user in with confirmationResult.confirm(code).
+           this.confirmationResult = confirmationResult;
+           const credential = firebase.auth.PhoneAuthProvider.credential(this.confirmationResult.verificationId, '123456');
+         firebase.auth().signInWithCredential(credential).then(credential1 => {
+            credential1.user.getIdToken().then(token => {
+             console.log('token id :' , token);
+             const headers = new HttpHeaders()
+               .set('content-type', 'application/json')
+               .set('Authorization','Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjU1NGE3NTQ3Nzg1ODdjOTRjMTY3M2U4ZWEyNDQ2MTZjMGMwNDNjYmMiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vcXVhbnR1bS1oYXNoLTI3MjIyMSIsImF1ZCI6InF1YW50dW0taGFzaC0yNzIyMjEiLCJhdXRoX3RpbWUiOjE1OTYyOTQ0MTYsInVzZXJfaWQiOiJtbG0yMjZxVDNqWkppR2RuTndOU2pHRzRoaGcxIiwic3ViIjoibWxtMjI2cVQzalpKaUdkbk53TlNqR0c0aGhnMSIsImlhdCI6MTU5NjI5NDQxNiwiZXhwIjoxNTk2Mjk4MDE2LCJlbWFpbCI6IjQ2ODg4ODg4ODg4QG1vb292LmlvIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJwaG9uZV9udW1iZXIiOiIrNDY4ODg4ODg4ODgiLCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7InBob25lIjpbIis0Njg4ODg4ODg4OCJdLCJlbWFpbCI6WyI0Njg4ODg4ODg4OEBtb29vdi5pbyJdfSwic2lnbl9pbl9wcm92aWRlciI6InBob25lIn19.vhBfhEZHCy4HmCItMSbwlyBCC3M3LGYxMzq1HezJLlBDvwcJosfeswfc2Z4b7AZgXS9iriksvBdhr1f9R956luq2SfrovDk5Q3q0rKgblvhoW6TGN8bNiQ_bki158oUUTj9TVI_7Nx7l286aEcoHmMXRzUAHA5MqgokTiV5OLxSxJJ0IMkrRh1cypIvjvl6UnkntyyYlt0STs21o2RiELuHlrx509FPZhpP7-upLUO6Lz-WW6yEVxu6eaOOcsr66mNeCP4Ra4ilFB0B5YknWyRHCX_sJZ4WkFcyq8yucQqfSSUyOt2G5SbeyzlMAvdy1cfmKc0aSEzWK4XMTDorfvw' );
+             this.http.get<any>('https://api.mooov.io/v1/orders/lookup-all', {'headers': headers}).subscribe(data => {
+                 console.log(data.total);
+             })
+     
+           });
+         }).catch(err => {
+          console.log(err);
+          });
+           this.otpSent = true;
+           }).catch(err => {
+           console.log(err);
+           });*/
     };
     AppComponent.prototype.onSubmit = function () {
-        //this.db.list('items').push({ content: this.itemValue});
+        this.db.list('items').push({ content: this.itemValue });
         this.itemValue = '';
     };
     AppComponent.prototype.sendOtp = function () {
         var _this = this;
-        firebase__WEBPACK_IMPORTED_MODULE_1__["auth"]().signInWithPhoneNumber('+46 8 888 888 88', this.recaptchaVerifier)
+        firebase__WEBPACK_IMPORTED_MODULE_2__["auth"]().signInWithPhoneNumber('+46 8 888 888 88', this.recaptchaVerifier)
             .then(function (confirmationResult) {
             // SMS sent. Prompt user to type the code from the message, then sign the
             // user in with confirmationResult.confirm(code).
@@ -242,16 +262,17 @@ var AppComponent = /** @class */ (function () {
         });
     };
     AppComponent.prototype.signIn = function () {
-        var _this = this;
         console.log("otp : ", this.otp);
-        var credential = firebase__WEBPACK_IMPORTED_MODULE_1__["auth"].PhoneAuthProvider.credential(this.confirmationResult.verificationId, this.otp);
-        firebase__WEBPACK_IMPORTED_MODULE_1__["auth"]().signInWithCredential(credential).then(function (credential1) {
+        var credential = firebase__WEBPACK_IMPORTED_MODULE_2__["auth"].PhoneAuthProvider.credential(this.confirmationResult.verificationId, '123456');
+        firebase__WEBPACK_IMPORTED_MODULE_2__["auth"]().signInWithCredential(credential).then(function (credential1) {
             credential1.user.getIdToken().then(function (token) {
                 console.log('token id :', token);
-                var headers = { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' };
-                _this.http.get('https://api.npms.io/v2/search?q=scope:angular', { headers: headers }).subscribe(function (data) {
+                /**
+                  const headers = { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json'};
+                this.http.get<any>('https://api.npms.io/v2/search?q=scope:angular', {headers}).subscribe(data => {
                     console.log(data.total);
-                });
+                })
+                 */
             });
         }).catch(function (err) {
             console.log(err);
@@ -260,8 +281,18 @@ var AppComponent = /** @class */ (function () {
         //   console.log(user);
         //  });
     };
+    AppComponent.prototype.request = function () {
+        var headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpHeaders"]()
+            .set('content-type', 'application/json')
+            .set('Authorization', 'Bearer ' + this.token);
+        this.http.get(this.url, { 'headers': headers }).subscribe(function (data) {
+            console.log(data);
+        });
+    };
     AppComponent.ctorParameters = function () { return [
-        { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"] }
+        { type: _angular_fire_database__WEBPACK_IMPORTED_MODULE_1__["AngularFireDatabase"] },
+        { type: _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_3__["AngularFirestore"] },
+        { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"] }
     ]; };
     AppComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -269,7 +300,9 @@ var AppComponent = /** @class */ (function () {
             template: __importDefault(__webpack_require__(/*! raw-loader!./app.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/app.component.html")).default,
             styles: [__importDefault(__webpack_require__(/*! ./app.component.scss */ "./src/app/app.component.scss")).default]
         }),
-        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"]])
+        __metadata("design:paramtypes", [_angular_fire_database__WEBPACK_IMPORTED_MODULE_1__["AngularFireDatabase"],
+            _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_3__["AngularFirestore"],
+            _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"]])
     ], AppComponent);
     return AppComponent;
 }());
@@ -322,16 +355,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_material_grid_list__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! @angular/material/grid-list */ "./node_modules/@angular/material/__ivy_ngcc__/fesm5/grid-list.js");
 /* harmony import */ var _angular_material_list__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! @angular/material/list */ "./node_modules/@angular/material/__ivy_ngcc__/fesm5/list.js");
 /* harmony import */ var _angular_material_select__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! @angular/material/select */ "./node_modules/@angular/material/__ivy_ngcc__/fesm5/select.js");
-/* harmony import */ var _angular_fire_database__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! @angular/fire/database */ "./node_modules/@angular/fire/__ivy_ngcc__/fesm5/angular-fire-database.js");
-/* harmony import */ var _order_list_order_list_component__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ./order-list/order-list.component */ "./src/app/order-list/order-list.component.ts");
-/* harmony import */ var _service_orders_service__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ./service/orders.service */ "./src/app/service/orders.service.ts");
-/* harmony import */ var _orders_orders_component__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ./orders/orders.component */ "./src/app/orders/orders.component.ts");
+/* harmony import */ var _angular_fire__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! @angular/fire */ "./node_modules/@angular/fire/__ivy_ngcc__/fesm5/angular-fire.js");
+/* harmony import */ var _angular_fire_database__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! @angular/fire/database */ "./node_modules/@angular/fire/__ivy_ngcc__/fesm5/angular-fire-database.js");
+/* harmony import */ var _order_list_order_list_component__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ./order-list/order-list.component */ "./src/app/order-list/order-list.component.ts");
+/* harmony import */ var _service_orders_service__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ./service/orders.service */ "./src/app/service/orders.service.ts");
+/* harmony import */ var _orders_orders_component__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ./orders/orders.component */ "./src/app/orders/orders.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -387,14 +422,14 @@ var AppModule = /** @class */ (function () {
                 _begin_state_begin_state_component__WEBPACK_IMPORTED_MODULE_6__["BeginStateComponent"],
                 _begin_state_image_handler_image_handler_component__WEBPACK_IMPORTED_MODULE_19__["ImageHandlerComponent"],
                 _begin_state_address_handler_address_handler_component__WEBPACK_IMPORTED_MODULE_26__["AddressHandlerComponent"],
-                _order_list_order_list_component__WEBPACK_IMPORTED_MODULE_35__["OrderListComponent"],
-                _orders_orders_component__WEBPACK_IMPORTED_MODULE_37__["OrdersComponent"]
+                _order_list_order_list_component__WEBPACK_IMPORTED_MODULE_36__["OrderListComponent"],
+                _orders_orders_component__WEBPACK_IMPORTED_MODULE_38__["OrdersComponent"]
             ],
             imports: [
                 ngx_markdown__WEBPACK_IMPORTED_MODULE_25__["MarkdownModule"].forRoot(),
                 _agm_core__WEBPACK_IMPORTED_MODULE_23__["AgmCoreModule"].forRoot(googleMapsParams),
-                //AngularFireModule.initializeApp(environment.firebase),
-                _angular_fire_database__WEBPACK_IMPORTED_MODULE_34__["AngularFireDatabaseModule"],
+                _angular_fire__WEBPACK_IMPORTED_MODULE_34__["AngularFireModule"].initializeApp(src_environments_environment__WEBPACK_IMPORTED_MODULE_24__["environment"].firebase),
+                _angular_fire_database__WEBPACK_IMPORTED_MODULE_35__["AngularFireDatabaseModule"],
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
                 _angular_common__WEBPACK_IMPORTED_MODULE_10__["CommonModule"],
                 _angular_material_slider__WEBPACK_IMPORTED_MODULE_30__["MatSliderModule"],
@@ -422,7 +457,7 @@ var AppModule = /** @class */ (function () {
                 _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_4__["BrowserAnimationsModule"],
                 _angular_material_extensions_google_maps_autocomplete__WEBPACK_IMPORTED_MODULE_22__["MatGoogleMapsAutocompleteModule"]
             ],
-            providers: [_service_orders_service__WEBPACK_IMPORTED_MODULE_36__["OrdersService"]],
+            providers: [_service_orders_service__WEBPACK_IMPORTED_MODULE_37__["OrdersService"]],
             bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_3__["AppComponent"]]
         })
     ], AppModule);
@@ -1541,7 +1576,16 @@ __webpack_require__.r(__webpack_exports__);
 var environment = {
     production: false,
     GOOGLE_MAPS_API_KEY: 'AIzaSyDYKmJ94HSxRolBxEcmPs6zC5m09jzkvgM',
-    firebase: {}
+    firebase: {
+        apiKey: "AIzaSyCzMCqAWCRcHXAnb9Weiv_G-pjrJNzB6do",
+        authDomain: "my-mooov.firebaseapp.com",
+        databaseURL: "https://my-mooov.firebaseio.com",
+        projectId: "my-mooov",
+        storageBucket: "my-mooov.appspot.com",
+        messagingSenderId: "76999994737",
+        appId: "1:76999994737:web:6498beba008a9cb8f05ad0",
+        measurementId: "G-7F1WDWJMR0"
+    }
 };
 /*
  * For easier debugging in development mode, you can import the following file
